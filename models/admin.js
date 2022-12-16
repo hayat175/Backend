@@ -10,17 +10,7 @@ const adminSchema = new mongoose.Schema({
         require : true
     },
     
-    userType : {
-        kind : {
-            type : String,
-            enum : ['admin']
-        },
-        item : {
-            type : mongoose.Types.ObjectId,
-            refPath : 'userType.kind'
-        }
-
-    }
+    
 },{
     collection : 'admin'
 });

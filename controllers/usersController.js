@@ -1,6 +1,4 @@
-const{
-    userModel
-} = require('../models');
+const {userModel} = require('../models');
  
 const addUser = (body) => {  //function/query stored in variable 'addUser'
 const doc = new userModel(body);
@@ -16,18 +14,18 @@ const updateUser = (body) => {       //function/query stored in variable 'addUse
     new : true});      //always returns the latest/new record in BD
     };
 
-    const deleteUser = (filter) => {       //function/query stored in variable 'addUser'
-        return userModel.deleteOne(filter);      //always returns the latest/new record in BD
+    const deleteUser = (filter) => {       
+        return userModel.deleteOne(filter);      
         };
 
 
-        const getUser = (filter) => {       //function/query stored in variable 'addUser'
-            return userModel.findOne(filter);      //always returns the latest/new record in BD
+        const getUser = (filter) => {       
+            return userModel.findOne(filter);    
             };
         
 
-            const getAllUsers = (filter) => {       //function/query stored in variable 'addUser'
-                return userModel.find(filter);      //always returns the latest/new record in BD
+            const getAllUsers = (filter) => {  
+                return userModel.find(filter);      
                 };
 
 module.exports = {

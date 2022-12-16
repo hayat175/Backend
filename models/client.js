@@ -10,23 +10,14 @@ const clientSchema = new mongoose.Schema({
         require : true
     },
     age : {
-        type : String,
+        type : Number,
         require : true
     },
     dob : {
         type : Date,
         require : true
     },
-    userType : {
-        kind : {
-            type : String,
-            enum : ['client'],
-        },
-        item : {
-            type : mongoose.Types.ObjectId,
-            refPath : 'userType.kind'
-        }
-    }
+   
 },
 {
     collection : 'client'
