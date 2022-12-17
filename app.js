@@ -16,7 +16,9 @@ const {
 
 
 
-var usersRouter = require('./routes/userRoute');
+var userRouter = require('./routes/userRoute');
+var adminRouter = require('./routes/adminRoute'); 
+var clientRouter = require('./routes/clientRoute');
 
 var app = express();
 
@@ -40,10 +42,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', indexRouter);
 app.use('/users', userRoute);  //Mount userRoute in express
-app.use('./admin' , adminRoute);
-app.use('./client' , clientRoute);
+app.use('/admin' , adminRoute);
+app.use('/client' , clientRoute);
 
 // catch 404 and forward to error handler
+
 app.use(function(req, res, next) {
   next(createError(404));
 });

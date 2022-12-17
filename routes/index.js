@@ -5,6 +5,7 @@ const clientRoute = require('./clientRoute');
 module.exports = {
 
   userRoute,
-  adminRoute,
-  clientRoute
+  clientRoute,
+  adminRoute
+ 
 };
