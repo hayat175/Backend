@@ -1,6 +1,6 @@
 const {clientModel} = require('../models');
 
-const addUser = (body) => {
+const addClient = (body) => {
 
     const doc = new clientModel(body);
     const query = {_id : doc._id};
@@ -10,32 +10,31 @@ const addUser = (body) => {
     });
        };
 
-const updateUser = (body) => {
+const updateClient = (body) => {
 
-    const doc = new clientModel(body);
-    const query = {_id : doc._id};
-    return clientModel.findOneAndUpdate(query,doc,{
+    const query = {_id : body._id};
+    return clientModel.findOneAndUpdate(query,body,{
     new : true
     });
         };
 
-const deleteUser = (filter) => {
+const deleteClient = (filter) => {
     return clientModel.deleteOne(filter);
 };
 
-const getUser = (filter) => {
+const getClient = (filter) => {
     return clientModel.findOne(filter);
 };
 
-const getAllUsers = (filter) => {
+const getAllClients = (filter) => {
     return clientModel.find(filter);
 };
 
 module.exports = {
-addUser,
-updateUser,
-deleteUser,
-getUser,
-getAllUsers
+addClient,
+updateClient,
+deleteClient,
+getClient,
+getAllClients
 
 };

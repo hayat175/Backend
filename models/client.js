@@ -3,19 +3,19 @@ const clientSchema = new mongoose.Schema({
 
     firstName : {
         type : String,
-        require : true
+        required : true
     },
     lastName : {
         type : String,
-        require : true
+        required : true
     },
     age : {
         type : Number,
-        require : true
+        required : true
     },
     dob : {
         type : Date,
-        require : true
+        required : true
     },
    
 },
@@ -23,4 +23,4 @@ const clientSchema = new mongoose.Schema({
     collection : 'client'
 });
 
-module.exports=mongoose.model('client' , clientSchema)
+module.exports=mongoose.model('client' , clientSchema);

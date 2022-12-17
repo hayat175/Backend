@@ -1,6 +1,6 @@
-usersController = require('./usersController');
-clientController = require('./clientController');
-adminController = require('./adminController');
+const usersController = require('./usersController');
+const clientController = require('./clientController');
+const adminController = require('./adminController');
 
 module.exports = {
     usersController,

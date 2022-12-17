@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const userRoute = require('./userRoute');
+const adminRoute = require('./adminRoute');
+const clientRoute = require('./clientRoute');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express bootcamp' });
-});
+module.exports = {
 
-module.exports = router;
+  userRoute,
+  adminRoute,
+  clientRoute
+};
