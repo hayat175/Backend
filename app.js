@@ -5,20 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
-
-
-// var indexRouter = require('./routes/index');
 const {
   userRoute,
   adminRoute,
   clientRoute
 } = require('./routes');
 
-
-
-var userRouter = require('./routes/userRoute');
-var adminRouter = require('./routes/adminRoute'); 
-var clientRouter = require('./routes/clientRoute');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 var app = express();
 
@@ -40,10 +33,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// actual routes
+app.post('/signup', authMiddleware.userSignup);
+
+// test routes
 // app.use('/', indexRouter);
 app.use('/users', userRoute);  //Mount userRoute in express
-app.use('/admin' , adminRoute);
-app.use('/client' , clientRoute);
+app.use('/admin' , adminRoute);  //Mount adminRoute in express
+app.use('/client' , clientRoute);   //Mount clientRoute in express
 
 // catch 404 and forward to error handler
 
