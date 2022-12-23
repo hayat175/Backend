@@ -5,7 +5,7 @@ const {
 } = require('../controllers');
 
 const signup = async (body) => {
-    // apply validation
+    // apply validation for users here
     if (!body.userName) {
         return Promise.reject({ error: "userName is required" });
     }
