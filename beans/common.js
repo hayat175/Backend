@@ -15,7 +15,7 @@ const signup = async (body) => {
     if (!body.userType) {
         return Promise.reject({ error: "userType is required" });
     }
-    if (!body.data) { // data represents public info of the user
+    if (!body.data) { // data represents public info of the user e.g firstName ,age etc
         return Promise.reject({ error: "data is required" });
     }
 
@@ -25,55 +25,57 @@ const signup = async (body) => {
         switch (userType) {
             case 'admin':
                 // apply admin fields validation here
-                if(!body.firstName){
+                
+                if (!body.data.firstName){
                     return Promise.reject({error : "firstName is required"});
                 }
-                if(!body.lastName){
+                if (!body.data.lastName){
                     return Promise.reject({error : "lastName is required"});
                 }
-
+                
                 result = await adminController.addAdmin(body.data);
                 break;
+
             case 'client':
                 // apply client fields validation here
-                if(!body.firstName){
+                
+                if(!body.data.firstName){
                     return Promise.reject({error : "firstName is required"});
                 }
-
-                if(!body.lastName){
+                if(!body.data.lastName){
                     return Promise.reject({error : "lastName is required"});
 
-
-                if(!body.age){
+                }
+                if(!body.data.age){
                     return Promise.reject({error : "age is required"});
                 }
 
-                if(!body.dob){
+                if(!body.data.dob){
                     return Promise.reject({error : "dob is required"});
                 }
-                    
-                }
+                  
                 result = await clientController.addClient(body.data);
                 break;
             default:
                 return Promise.reject({ error: "userType is invalid" });
         }
-
+       
         const userJson = {
             userName: body.userName,
-            password: body.password, // make this password encrypted
+            password: body.password,  // make this password encrypted
             userType: {
                 kind: userType,
                 item: result._id
             }
-        };
+            
+        };   
         const user = await usersController.addUser(userJson);
         return user;
     } catch (ex) {
         return Promise.reject({ error: ex });
     }
- 
-};
+}
+
 
 module.exports = {
     signup
