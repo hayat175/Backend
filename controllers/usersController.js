@@ -20,7 +20,7 @@ const updateUser = (body) => {       //function/query stored in variable 'addUse
 
 
         const getUser = (filter) => {       
-            return userModel.findOne(filter);    
+            return userModel.findOne(filter).populate('userType.item');    
             };
         
 
