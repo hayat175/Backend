@@ -1,7 +1,6 @@
 const { sign, verify } = require('jsonwebtoken');
 const { signup } = require('../beans/common');
-const { login } = require('../beans/common');
-const { usersController } = require('../controllers');
+const { usersController, adminController, clientController } = require('../controllers');
 
 const executeLogin = async (username, password, cb) => {
     try {
@@ -28,7 +27,19 @@ const generateToken = async (req, res, next) => {
 };
 const respond = async (req, res, next) => {
     const user = req.user;
-
+/*
+    const userType = user.userType.kind;
+    const item = user.userType.item;
+    let data = null;
+    if (userType === 'admin') {
+        data = await adminController.getAdmin({ _id: item });
+    }
+    if (userType === 'client') {
+        data = await clientController.getClient({ _id: item });
+    }
+   const result = { token: req.token, user: data };
+    res.status(200).send(result);
+    */
     const result = { token: req.token, user: user.userType.item };
     res.status(200).send(result);
 };
@@ -41,19 +52,10 @@ const userSignup = async (req, res, next) => {
         return res.status(400).send(error);
     }
 };
-const userLogin = async (req, res, next) => {
-    const body = req.body;
-    try {
-        const result = await login(body);
-        return res.status(200).send(result);
-    } catch (error) {
-        return res.status(400).send(error);
-    }
-};
+
 
 module.exports = {
     userSignup,
-    userLogin,
     executeLogin,
     generateToken,
     respond

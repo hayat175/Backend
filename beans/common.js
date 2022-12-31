@@ -76,6 +76,7 @@ const signup = async (body) => {
     }
 }
 
+/*
 
 const login = async (body) => {
     if(!body.userName){
@@ -116,8 +117,7 @@ const login = async (body) => {
         return Promise.reject({ error: ex });
     }
 }
-
+*/
 module.exports = {
-    signup,
-    login
+    signup
 }
