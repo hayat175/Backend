@@ -1,5 +1,5 @@
 const {userModel} = require('../models');
- 
+
 const addUser = (body) => {  //function/query stored in variable 'addUser'
 const doc = new userModel(body);
 const query = {_id : doc._id };  //same as 'where' in sql 

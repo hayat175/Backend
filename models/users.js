@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+
 const usersSchema = new mongoose.Schema({   //schema is class of mongoose library whic is used to describe the table elements like column,rows etc
     userName : {
         type : String,
@@ -18,7 +20,9 @@ const usersSchema = new mongoose.Schema({   //schema is class of mongoose librar
             type : mongoose.Types.ObjectId,
             refPath : 'userType.kind'}
     }
+    
 },
+
 {
     collection : 'users'    //users is the name of table in database
 });

@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 
+const inputMiddleware = require('./middlewares/inputMiddleware');
 const {
   userRoute,
   adminRoute,
@@ -17,8 +18,9 @@ const {
 const authMiddleware = require('./middlewares/authMiddleware');
 
 var app = express();
-
-mongoose.connect('mongodb://127.0.0.1:27017/my-db',(err) =>{
+ 
+//DB Connection
+mongoose.connect('mongodb://127.0.0.1:27017/my-db',(err) => {
   if (err){
     return console.log('error connecting with DB' , err);
   }
@@ -43,6 +45,7 @@ passport.use(new Strategy(
 ));
 
 // actual routes
+app.use(inputMiddleware.handleOptions);
 app.post('/signup', authMiddleware.userSignup);
 app.post('/login',
   passport.initialize(),

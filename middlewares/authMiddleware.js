@@ -4,7 +4,7 @@ const { usersController, adminController, clientController } = require('../contr
 
 const executeLogin = async (username, password, cb) => {
     try {
-        const filter = { userName: username, password: password };
+        const filter = { userName: username, password:password };
         const user = await usersController.getUser(filter);
         if (!user) {
             return cb(null, false);
