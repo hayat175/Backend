@@ -21,7 +21,7 @@ const generateToken = async (req, res, next) => {
     const json = {
         _id: user._id
     };
-    const token = sign({ user: json }, 'someSecretvalue');
+    const token = sign({ user: json }, 'someSecretvalue',{expiresIn:"1h"});
     req.token = token;
     next();
 };
@@ -53,10 +53,62 @@ const userSignup = async (req, res, next) => {
     }
 };
 
+function verifyToken(req, res, next) {
+    let token = '';
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.split(' ')[0] === 'Bearer'
+    ) {
+      // eslint-disable-next-line prefer-destructuring
+      token = req.headers.authorization.split(' ')[1];
+    } else if (req.query.token) {
+      token = req.query.token;
+    } else {
+      return res
+        .status(401)
+        .json({ success: false, error: 'Please provide token.' });
+    }
+    verify(token, "someSecretvalue", async (error, decoded) => {
+      if(error) {
+        const { name } = error;
+        switch (name) {
+          case 'JsonWebTokenError':
+            return res
+              .status(401)
+              .json({ success: false, error: 'Request Access Denied!' });
+            break;
+          case 'TokenExpiredError':
+            return res
+              .status(401)
+              .json({ success: false, error: 'Your session has been expired!' });
+            break;
+          default:
+            return res
+              .status(401)
+              .json({ success: false, error: 'unhandled authentication case!' });
+        }
+      } else {
+        const userID = decoded?.user?._id;
+        try {
+          let user = await UserController.getUserById(userID);
+          if (user === null) {
+            return res
+              .status(401)
+              .json({ success: false, error: 'Invalid token' });
+          }
+          req.user = user;
+          next();
+        } catch (err) {
+          res.status(401).send(err);
+        }
+      }
+    });
+}
 
 module.exports = {
     userSignup,
     executeLogin,
     generateToken,
-    respond
+    respond,
+    verifyToken
 }
