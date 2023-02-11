@@ -69,6 +69,8 @@ function verifyToken(req, res, next) {
         .json({ success: false, error: 'Please provide token.' });
     }
     verify(token, "someSecretvalue", async (error, decoded) => {
+      
+    console.log(error, decoded);
       if(error) {
         const { name } = error;
         switch (name) {
@@ -90,7 +92,7 @@ function verifyToken(req, res, next) {
       } else {
         const userID = decoded?.user?._id;
         try {
-          let user = await UserController.getUserById(userID);
+          let user = await usersController.getUser({_id : userID});
           if (user === null) {
             return res
               .status(401)
@@ -105,10 +107,30 @@ function verifyToken(req, res, next) {
     });
 }
 
+function checkClientPermissions(req, res, next) {
+  const userType = req.user.userType.kind;
+  if (userType === 'client') {
+    next();
+  } else {
+    return res.status(401).send({ message: "You do not have permissions to access this" });
+  }
+};
+
+function checkAdminPermissions(req, res, next) {
+  const userType = req.user.userType.kind;
+  if (userType === 'admin') {
+    next();
+  } else {
+    return res.status(401).send({ message: "You do not have permissions to access this" });
+  }
+};
+
 module.exports = {
     userSignup,
     executeLogin,
     generateToken,
     respond,
-    verifyToken
+    verifyToken,
+    checkAdminPermissions,
+    checkClientPermissions
 }

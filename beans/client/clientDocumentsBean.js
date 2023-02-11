@@ -11,5 +11,26 @@ const addClientDocument = (body) => {
     }
 
 }
+ const updateClientDocument = (body) => {
+  try {
+      const result = documentsController.updateDocument(body);
+      return result;
+  }catch(error){
 
-module.exports = {addClientDocument};
+    return Promise.reject(error)
+  }
+ }
+
+ const deleteClientDocument = (filter) => {
+     return documentsController.deleteDocument(filter);
+ }
+
+ const getClientDocument = (filter) =>{
+  return documentsController.getDocument(filter);
+ }
+
+ const getClientAllDocuments = (filter) =>{
+  return documentsController.getAllDocuments(filter);
+ }
+
+module.exports = {addClientDocument,updateClientDocument,deleteClientDocument,getClientDocument,getClientAllDocuments};

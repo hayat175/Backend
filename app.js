@@ -14,7 +14,8 @@ const {
   userRoute,
   adminRoute,
   clientRoute,
-  clientDocumentsRoute
+  clientDocumentsRoute,
+  adminDocumentRoutes
 } = require('./routes');
 
 
@@ -73,7 +74,16 @@ app.use('/users', userRoute);  //Mount userRoute in express
 app.use('/admin' , adminRoute);  //Mount adminRoute in express
 app.use('/client' , clientRoute);   //Mount clientRoute in express
 app.use(authMiddleware.verifyToken);
-app.use('/client/documents',clientDocumentsRoute);
+app.use(
+  '/client/documents',
+  authMiddleware.checkClientPermissions,
+  clientDocumentsRoute
+);
+app.use(
+  '/admin/documents',
+  authMiddleware.checkAdminPermissions,
+  adminDocumentRoutes
+);
 
 
 // catch 404 and forward to error handler

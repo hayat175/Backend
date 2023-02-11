@@ -7,7 +7,7 @@ const addDocument = (body) => {
     return documentsModel.findOneAndUpdate(query,doc,{
     upsert : true,
     new : true
-    });
+    }).populate('client');
        };
 
 const updateDocument = (body) => {
@@ -27,7 +27,7 @@ const getDocument = (filter) => {
 };
 
 const getAllDocuments = (filter) => {
-    return documentsModel.find(filter);
+    return documentsModel.find(filter).populate('client');
 };
 
 module.exports = {
@@ -35,6 +35,6 @@ addDocument,
 updateDocument,
 deleteDocument,
 getDocument,
-getDocument,
+getAllDocuments,
 
 };
